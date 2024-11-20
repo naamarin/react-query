@@ -2,25 +2,25 @@
 
 const { MongoClient, ObjectId } = require("mongodb");
 
-let client;
-let clientPromise;
+// let client;
+// let clientPromise;
+//
+// export async function connectDatabase() {
+//   if (!client) {
+//     const dbConnectionString = process.env.PUBLIC_DB_CONNECTION;
+//     if (!dbConnectionString) {
+//       throw new Error("Database connection string is not defined");
+//     }
+//     client = new MongoClient(dbConnectionString);
+//     clientPromise = client.connect();
+//   }
+//   return clientPromise;
+// }
 
 export async function connectDatabase() {
-  if (!client) {
-    const dbConnectionString = process.env.PUBLIC_DB_CONNECTION;
-    if (!dbConnectionString) {
-      throw new Error("Database connection string is not defined");
-    }
-    client = new MongoClient(dbConnectionString);
-    clientPromise = client.connect();
-  }
-  return clientPromise;
+  const dbConnection = process.env.PUBLIC_DB_CONNECTION;
+  return await MongoClient.connect(dbConnection);
 }
-
-// async function connectDatabase() {
-//   const dbConnection = process.env.PUBLIC_DB_CONNECTION;
-//   return await MongoClient.connect(dbConnection);
-// }
 
 export async function insertDocument(client, collection, document) {
   const db = client.db("db01");
